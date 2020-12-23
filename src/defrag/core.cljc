@@ -1,5 +1,6 @@
 (ns defrag.core
   (:require
+   [defntly.specs]
    [clojure.walk :as walk]
    [clojure.spec.alpha :as s]
    [clojure.core.specs.alpha :as specs]))
@@ -53,6 +54,18 @@
          ([x] (+ 2 x))
          ([x & ys] (first ys)))
 
+  ;; macro-expands to:
+  #_(def f
+      (fn*
+       ([] (println (pr-str {:args [], :name "f", :body '[1]})) 1)
+       ([x]
+        (println (pr-str {:args [x], :name "f", :body '[(+ 2 x)]}))
+        (+ 2 x))
+       ([x & ys]
+        (println (pr-str {:args [x ys], :name "f", :body '[(first ys)]}))
+        (first ys))))
+
+  
   ;; calling it produces:
 
   (f)

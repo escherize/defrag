@@ -4,6 +4,8 @@ A Clojure library designed to make wrapping defn forms possible for mortals.
 
 ## Usage
 
+Instead of having to struggle with wrapping defn forms which deal multi-arities, docstrings, privacy metadata, and more, this library enables us all to wrap defn how we see fit.
+
 You the user are responsible for writing a function that returns source code, which is called on a function's name args and body.
 
 ### Print Example (pdefn)
@@ -60,9 +62,9 @@ Calling it produces:
 
 ### Prior Art
 
-This library is based off of the work in https://github.com/viebel/defntly, which I would have used except there is no support for wrapping arguments.
+This library is based closely off of the work in https://github.com/viebel/defntly, which I would have used except there is no support for wrapping arguments.
 
-I added some reader macros so that you can do e.g.:
+I've also included some reader macros, and you can add them `defrag/p` or `defrag/d` to `defn` forms like so:
 
 ``` clojure
 #defrag/p
@@ -71,8 +73,6 @@ I added some reader macros so that you can do e.g.:
   ([x] (+ 2 x))
   ([x & ys] (first ys)))
 ```
-
-Instead of replacing the call of `defn` to `pdefn` directly.
 
 
 ## License

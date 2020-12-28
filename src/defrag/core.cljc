@@ -23,7 +23,7 @@
                                           (partial body-update-fn parameters))))
                            bodies)))))
 
-(defn ^:private defn-update-body-with-args
+(defn defn-update-body-with-args
   [f args-to-defn]
   (let [{:keys [fn-name] :as conf} (s/conform ::df/defn-args args-to-defn)
         new-conf (update-conf-with-args conf (partial f (str fn-name)))

@@ -1,9 +1,8 @@
 (ns defrag.core
   (:require
-   [defntly.specs]
+   [defrag.specs :as df]
    [clojure.walk :as walk]
-   [clojure.spec.alpha :as s]
-   [clojure.core.specs.alpha :as specs]))
+   [clojure.spec.alpha :as s]))
 
 (defn ^:private get-params [{:keys [params] :as body}]
   (let [args (mapv second (:args params))]
@@ -26,9 +25,9 @@
 
 (defn ^:private defn-update-body-with-args
   [f args-to-defn]
-  (let [{:keys [fn-name] :as conf} (s/conform ::specs/defn-args args-to-defn)
+  (let [{:keys [fn-name] :as conf} (s/conform ::df/defn-args args-to-defn)
         new-conf (update-conf-with-args conf (partial f (str fn-name)))
-        new-args (s/unform ::specs/defn-args new-conf)]
+        new-args (s/unform ::df/defn-args new-conf)]
     (cons `defn new-args)))
 
 (defmacro defrag!
@@ -43,11 +42,16 @@
   "Example of using a function to wrap various defn forms, which has
   access to argument forms."
   [name args body]
-  `((println (pr-str {:name ~name :args ~args :body '~body})) ~@body))
+  `((println (pr-str {:name ~name
+                      :arg-list '~args
+                      :args ~args
+                      :body '~body})) ~@body))
 
 (defrag! pdefn wrap-print)
 
 (comment
+
+  (pdefn g [y] y)
 
   (pdefn ^:private f
          ([] 1)
@@ -65,7 +69,7 @@
         (println (pr-str {:args [x ys], :name "f", :body '[(first ys)]}))
         (first ys))))
 
-  
+
   ;; calling it produces:
 
   (f)
@@ -140,4 +144,3 @@
   ;;=> 900
 
   )
-

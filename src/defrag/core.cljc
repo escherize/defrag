@@ -126,21 +126,16 @@
 (defn inject-ddefn [form]
   (walk/postwalk (fn [x] (if (= x 'defn) `ddefn x)) form))
 
-(comment
+;; #defrag/d
+;; (defn square [x] (* x x))
 
-  #defrag/d
-  (defn square [x] (* x x))
+;; ;; call square
+;; (square -30)
+;; ;;=> 900
 
-  ;; call square
-  (square -30)
-  ;;=> 900
+;; ;; pretend you forgot square's arguments:
+;; square_args
+;; ;;=> [-30]
 
-  ;; pretend you forgot square's arguments:
-  square_args
-  ;;=> [-30]
-
-  ;; rerun square:
-  (rerun_square)
-  ;;=> 900
-
-  )
+;; ;; rerun square:
+;; (rerun_square)

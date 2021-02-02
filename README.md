@@ -17,8 +17,12 @@ Here's an example of such a function:
   "Example of using a function to wrap various defn forms, which has
   access to argument forms."
   [name args body]
-  `((println (pr-str {:name ~name :args ~args :body '~body})) ~@body))
-  ```
+  `((println (pr-str {:name        ~name
+                      :args        ~args
+                      :args-values '~args
+                      :body        '~body}))
+    ~@body))
+```
 
 Calling `defrag!` with a symbol and that function will tie them together
 
@@ -64,20 +68,9 @@ Calling it produces:
 
 This library is based closely off of the work in https://github.com/viebel/defntly, which I would have used except there is no support for wrapping arguments.
 
-I've also included some reader macros, and you can add them `defrag/p` or `defrag/d` to `defn` forms like so:
-
-``` clojure
-#defrag/p
-(defn ^:private f
-  ([] 1)
-  ([x] (+ 2 x))
-  ([x & ys] (first ys)))
-```
-
-
 ## License
 
-Copyright © 2020 Bryan Maass
+Copyright © 2021 Bryan Maass
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at

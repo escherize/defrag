@@ -1,4 +1,4 @@
-(defproject escherize/defrag "0.1.5"
+(defproject escherize/defrag "0.1.6"
   :description "A facility for writing defn macros that handle arguments"
   :url "http://github.com/escherize/defrag"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later"}
